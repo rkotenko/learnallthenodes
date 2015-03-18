@@ -3,6 +3,7 @@ module.exports = function(app) {
     var adventureRoutes = App.route('adventureRoutes');
     var lootRoutes = App.route('lootRoutes');
     var bestiaryRoutes = App.route('bestiaryRoutes');
+    var userRoutes = App.route('userRoutes');
     
     app.get("/", homeRoutes.home);
     
@@ -15,5 +16,8 @@ module.exports = function(app) {
     app.get("/loot/:id", lootRoutes.show);
     
     app.get('/bestiary', bestiaryRoutes.index);
+    
+    app.get('/sign_up', userRoutes.new);
+    app.post('/sign_up', userRoutes.create);
     
 ;};
