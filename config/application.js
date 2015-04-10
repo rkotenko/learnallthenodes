@@ -54,4 +54,4 @@ App.app.use(App.app.router);
 App.require("config/routes.js")(App.app);
 
 // load the database connection
-App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/nodeslash_dev'); 
+App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/nodeslash_' + App.env); 

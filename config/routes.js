@@ -4,6 +4,7 @@ module.exports = function(app) {
     var lootRoutes = App.route('lootRoutes');
     var bestiaryRoutes = App.route('bestiaryRoutes');
     var userRoutes = App.route('userRoutes');
+    var sessionRoutes = App.route('sessionRoutes');
     
     app.get("/", homeRoutes.home);
     
@@ -19,5 +20,10 @@ module.exports = function(app) {
     
     app.get('/sign_up', userRoutes.new);
     app.post('/sign_up', userRoutes.create);
+    
+    app.get('/sign_in', sessionRoutes.new);
+    app.post('/sign_in', sessionRoutes.create);
+    
+    
     
 ;};

@@ -5,7 +5,7 @@ module.exports.new = function(req, res) {
 };
 
 module.exports.create = function(req, res) {
-    var u = new User({email: req.body.email});
+    var u = new User({email: req.body.email, passwordHash: req.body.password});
 
     u.save(function(err) {
         if(err) {
