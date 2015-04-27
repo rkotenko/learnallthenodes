@@ -30,4 +30,5 @@ App.Test = {
 
 beforeEach(function(done) {
    App.Test.clearDb(done);
+   //console.log('testHelper clearDB');
 });
