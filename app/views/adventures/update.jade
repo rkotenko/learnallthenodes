@@ -1,7 +1,6 @@
 extends ../layouts/home
 
-block content
-  h1 It's a secret to everybody.
+h1 It's a secret to everybody.
 
-append extraJs
-  script(src="/javascripts/hello.js")
+prepend extraJs
+  script(src="/javascripts/hello.js").
