@@ -1,3 +1,3 @@
-module.exports = function bossify(str) {
-  return str + ' like a boss'
-}
+module.exports = function(str) {
+    return str + ' like a boss';
+};

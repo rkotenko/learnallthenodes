@@ -1,18 +1,16 @@
-extends ../layouts/home.jade
+extends ../layouts/home
 
 block content
-  h1 Join teh web's premiere adventure venue
-
+  h1 join!
+  
   form.form-horizontal(action="/sign_up", method="post")
     .form-group
       label.control-label.col-sm-2 Email
       .col-sm-10
-        input(type="email", name="email")
-    .form-group
+        input(type="text", name="email")
       label.control-label.col-sm-2 Password
       .col-sm-10
         input(type="password", name="password")
-    .form-gorup
+    .form-group
       .col-sm-offset-2
-        button(type="submit") Start yer adventure
-
+        button(type="submit") Start!

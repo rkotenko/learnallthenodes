@@ -1,84 +1,57 @@
-var env         = process.env.NODE_ENV || 'development'
-  , packageJson = require('../package.json')
-  , path        = require('path')
-  , express     = require('express')
-
-console.log('Loading App in ' + env + ' mode.')
+var env = process.env.NODE_ENV || 'development',
+    packageJson = require('../package.json'),
+    path = require('path'),
+    express = require('express');
+    
+console.log("Loading App " + env + " mode.");
 
 global.App = {
-  app: express()
-, port: process.env.PORT || 3000
-, version: packageJson.version
-, root: path.join(__dirname, '..')
-, appPath: function(path) {
-    return this.root + '/' + path
-  }
-, require: function(path) {
-    return require(this.appPath(path))
-  }
-, env: env
-, start: function() {
-    if (!this.started) {
-      this.started = true
-      this.app.listen(this.port)
-      console.log("Running App Version " + App.version + " on port " + App.port + " in " + App.env + " mode")
-    }
-  }
-, model: function(path) {
-    return this.require("app/models/" + path)
-  }
-, route: function(path) {
-    return this.require("app/routes/" + path)
-  }
-, util: function(path) {
-    return this.require("app/utils/" + path)
-  }
-}
-
-// Use Jade for views
-App.app.set('views', App.appPath("app/views"))
-App.app.set('view engine', 'jade');
-App.app.set('view options', { pretty: env === 'development' });
-App.app.locals({bossify:App.util('bossify'), pretty:true})
-
-// Configure less
-var lessMiddleware = require('less-middleware')
-  , lessMiddlewareOptions = {
-      dest: App.appPath('/public')
-    , relativeUrls: true
-    , force: App.env === 'development'
-    , once: App.env !== 'development'
-    , debug: App.env === 'development'
-    , preprocess: {
-        path: function(pathname,req) {
-          console.log(pathname)
-          return pathname.replace('/stylesheets', '')
+    app: express(),
+    port: process.env.PORT || 3000,
+    version: packageJson.version,
+    root: path.join(__dirname, '..'),
+    appPath: function(path) {
+        return this.root + '/' + path
+    },
+    require: function(path) {
+        return require(this.appPath(path))
+    },
+    env: env,
+    start: function() {
+        if(!this.started) {
+            this.started = true;
+            this.app.listen(this.port);
+            console.log("Running App Version " + App.version + ' on port ' + App.port);
         }
-      }
+    },
+    model: function(path) {
+        return this.require('app/models/' + path);
+    },
+    route: function(path) {
+        return this.require("app/routes/" + path);
+    },
+    util: function(path) {
+        return this.require('app/utils/' + path);
     }
-  , lessParserOptions = {
-      dumpLineNumbers: 'mediaquery'
-    }
-  , lessCompilerOptions = {
-      compress: App.env !== 'development'
-    }
+};
 
-App.app.use(lessMiddleware(
-  App.appPath('app/stylesheets')
-, lessMiddlewareOptions
-, lessParserOptions
-, lessCompilerOptions
-))
+// View template setup
+App.app.set('views', App.appPath('app/views'));
+App.app.set('view engine', 'jade');
 
-// Middlewarez
-App.app.use(express.bodyParser())
-App.app.use(express.methodOverride())
-App.app.use(express.cookieParser())
-App.app.use(express.cookieSession({secret: "it'sasecrettoeverybody", key: "session"}))
-App.app.use(App.app.router)
-App.app.use(express.static(App.appPath('public')))
+// pretty nicely formats for view in browser
+App.app.locals.pretty = env === 'development';
+App.app.locals({bossify: App.util('bossify')});
 
-App.require("config/routes")(App.app)
+// Middleware
+App.app.use(express.bodyParser());
+App.app.use(express.methodOverride());
+App.app.use(express.cookieParser());
+App.app.use(express.cookieSession({secret: 'not one', key: 'session'}));
+App.app.use(express.static(App.appPath('public')));
+App.app.use(App.app.router);
 
-// Bootstrap teh db
-App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/nodeslash_' + App.env)
+App.require("config/routes.js")(App.app);
+
+// load the database connection
+App.require('config/database')(process.env.DATABASE_URL || 'mongodb://localhost/nodeslash_' + App.env); 

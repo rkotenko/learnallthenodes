@@ -1,3 +1,3 @@
-exports.home = function home(req,res) {
-  res.render('home/home')
-}
+module.exports.home = function(req,res) {
+    res.render('home/home', {title: 'Home - NodeSlash'});
+};
