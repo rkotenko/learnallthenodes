@@ -1,0 +1,13 @@
+/* This is a variable that can be used in the css */
+@administrator-text-color: #00B4FF;
+
+.system_message {
+  background-color: #EEE;
+  padding: 15px;
+
+  /* With Less, I can nest tags so now this p only refers to ones inside
+     of system_message elements */
+  p {
+    color: @administrator-text-color;
+  }
+}
