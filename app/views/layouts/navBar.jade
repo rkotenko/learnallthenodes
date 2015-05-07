@@ -1,7 +1,24 @@
-ul
-  li
-    a(href="/about") About
-  li
-    a(href="/sign_in") Sign in
-  li
-    a(href="/sign_up") Sign Up
+nav.navbar.navbar-inverse(role="navigation")
+  .navbar-header
+    button.navbar-toggle(type="button", data-toggle="collapse", data-target="#main_site_nav")
+      
+      //- sr-only is for screen readers
+      span.sr-only Toggle Navigation 
+      
+      //- horizontal line 
+      span.icon-bar 
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand(href="/")
+      | NodeSlash
+   
+   //- here the id is set to the data-target above so that when the screen is resized
+   //- and the menu button appears instead, clicking it refers to these items   
+  .collapse.navbar-collapse#main_site_nav  
+    ul.nav.navbar-nav
+      li
+        a(href="/about") About
+      li
+        a(href="/sign_in") Sign in
+      li
+        a(href="/sign_up") Sign Up
